@@ -16,6 +16,7 @@ source ~/.bash_profile
 go version
 
 # установка ноды
+cd $HOME
 git clone https://github.com/gnolang/gno/
 cd gno
 make install
