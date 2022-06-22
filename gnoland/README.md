@@ -1,9 +1,3 @@
-<style>
-  code{
-    padding:0px
-  }
-</style>
-
 <h1>Руководство по установке ноды Gnoland</h1>
 
 
