@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../style.css" />
+<link rel="stylesheet" href="https://github.com/dm-paull/guides/blob/main/style.css" />
 
 <h1>Руководство по установке ноды Gnoland</h1>
 
