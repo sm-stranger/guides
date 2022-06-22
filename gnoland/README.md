@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../style.css"
+
 <h1>Руководство по установке ноды Gnoland</h1>
 
 
