@@ -19,7 +19,7 @@ go version
 cd $HOME
 git clone https://github.com/gnolang/gno/
 cd gno
-make install
+make
 
 # создаем кошелек (generate) или восстанавливаем уже существующий (--recover)
 ./build/gnokey generate
