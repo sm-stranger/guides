@@ -6,7 +6,7 @@ sudo ufw default deny incoming
 sudo ufw allow ssh/tcp
 sudo ufw limit ssh/tcp
 sudo ufw allow 26657
-sudo ufw enable
+sudo ufw enable -y
 sudo ufw reload
 
 # подготовка сервера
