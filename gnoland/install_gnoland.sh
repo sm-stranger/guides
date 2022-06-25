@@ -40,12 +40,11 @@ cat $HOME/gno/config.txt
 # addr="$(sed '/pub:/,$ d' < $HOME/.gno/config.txt)"
 # addr=cat $HOME/.gno/config.txt | awk '{ print } $0 == "pub:" { exit(0) }'
 # cat $HOME/.gno/config.txt | awk '/pub:/{exit 0}{print $0}'
-addr_length=0;
-while [ $addr_length < 30 ]
-do
+
+if [ !address ]; then
     read -p 'Скопируйте и вставьте адрес кошелька (указан в выводе выше: "addr:" )' address
-done
-echo 'export address='$address >> $HOME/.bash_profile
+    echo 'export address='$address >> $HOME/.bash_profile
+fi
 source $HOME/.bash_profile
 
 # получение токенов
