@@ -28,9 +28,8 @@ go version
 git clone https://github.com/gnolang/gno/
 cd gno
 make
-cd $HOME
 
-gnokey=$HOME/gno/.build/gnokey
+gnokey=./build/gnokey
 
 # создаем кошелек
 $gnokey add account > $HOME/gno/config.txt
@@ -41,10 +40,10 @@ cat $HOME/gno/config.txt
 # addr="$(sed '/pub:/,$ d' < $HOME/.gno/config.txt)"
 # addr=cat $HOME/.gno/config.txt | awk '{ print } $0 == "pub:" { exit(0) }'
 # cat $HOME/.gno/config.txt | awk '/pub:/{exit 0}{print $0}'
-$addr_length=expr length address;
-until [ $addr_length < 40 ]
+$addr_length=0;
+while [ $addr_length < 30 ]
 do
-    read -p 'Скопируйте и вставьте адрес кошелька (указан в выводе выше: "addr:" )'address
+    read -p 'Скопируйте и вставьте адрес кошелька (указан в выводе выше: "addr:" )' address
 done
 echo 'export address='$address >> $HOME/.bash_profile
 source $HOME/.bash_profile
