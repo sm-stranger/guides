@@ -55,7 +55,7 @@ while [ $balance !== 'height: 0 data: "3000gnot"' ];
 
 
 # регистрация аккаунта
-./build/gnokey query auth/accounts/$address --remote gno.land:36657
+$gnokey query auth/accounts/$address --remote gno.land:36657
 
 read -p "User Name: " username
 echo 'export username='$username >> $HOME/.bash_profile
