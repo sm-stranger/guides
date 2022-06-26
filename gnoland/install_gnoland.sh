@@ -67,13 +67,13 @@ source $HOME/.bash_profile
 
 
 # создаем фаил с информацией о нашей регистрации
-./build/gnokey maketx call $address --pkgpath "gno.land/r/users" --func "Register" --gas-fee 1gnot --gas-wanted 3000000 --send "2000gnot" --args "" --args $username --args "" > unsigned.tx
+$gnokey maketx call $address --pkgpath "gno.land/r/users" --func "Register" --gas-fee 1gnot --gas-wanted 3000000 --send "2000gnot" --args "" --args $username --args "" > unsigned.tx
 
 # создаем транзакцию
-./build/gnokey sign $address --txpath unsigned.tx --chainid testchain --number $account_number --sequence $sequence_number > signed.tx
+$gnokey sign $address --txpath unsigned.tx --chainid testchain --number $account_number --sequence $sequence_number > signed.tx
 
 # проводим транзакцию
-./build/gnokey broadcast signed.tx --remote gno.land:36657
+$gnokey broadcast signed.tx --remote gno.land:36657
 
 # выполняем задание
 read -p "Вставьте ссылку на свою работу: " url
