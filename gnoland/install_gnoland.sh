@@ -32,14 +32,11 @@ make
 gnokey=./build/gnokey
 
 # создаем кошелек
-$gnokey add account > $HOME/gno/config.txt
+$gnokey add account > $HOME/config.txt
 cat $HOME/gno/config.txt
 
 # установка переменной address
-# address=cat $HOME/config
-# addr="$(sed '/pub:/,$ d' < $HOME/.gno/config.txt)"
-# addr=cat $HOME/.gno/config.txt | awk '{ print } $0 == "pub:" { exit(0) }'
-# cat $HOME/.gno/config.txt | awk '/pub:/{exit 0}{print $0}'
+
 
 if [ !address ]; then
     read -p 'Скопируйте и вставьте адрес кошелька (указан в выводе выше: "addr:" )' address
