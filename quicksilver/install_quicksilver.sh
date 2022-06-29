@@ -14,11 +14,11 @@ echo "=================================================="
 sleep 2
 
 # set vars
-if [ ! $NODENAME ]; then
+if [ ! $NODENAME ]; then 
 	read -p "Enter node name: " NODENAME
 	echo 'export NODENAME='$NODENAME >> $HOME/.bash_profile
 fi
-QUICKSILVER_PORT=11
+QUICKSILVER_PORT=26
 if [ ! $WALLET ]; then
 	echo "export WALLET="$NODENAME"-Wallet" >> $HOME/.bash_profile
 fi
@@ -127,3 +127,51 @@ sudo systemctl restart quicksilverd
 echo '=============== SETUP FINISHED ==================='
 echo -e 'To check logs: \e[1m\e[32mjournalctl -u quicksilverd -f -o cat\e[0m'
 echo -e "To check sync status: \e[1m\e[32mcurl -s localhost:${QUICKSILVER_PORT}657/status | jq .result.sync_info\e[0m"
+
+# load variables into system
+source $HOME/.bash_profile
+
+# create wallet
+quicksilverd keys add $WALLET
+
+# save wallet info
+QUICKSILVER_WALLET_ADDRESS=$(quicksilverd keys show $WALLET -a)
+QUICKSILVER_VALOPER_ADDRESS=$(quicksilverd keys show $WALLET --bech val -a)
+echo 'export QUICKSILVER_WALLET_ADDRESS='${QUICKSILVER_WALLET_ADDRESS} >> $HOME/.bash_profile
+echo 'export QUICKSILVER_VALOPER_ADDRESS='${QUICKSILVER_VALOPER_ADDRESS} >> $HOME/.bash_profile
+source $HOME/.bash_profile
+
+# create validator
+quicksilverd tx staking create-validator \
+  --amount 1000000uqck \
+  --from $WALLET \
+  --commission-max-change-rate "0.01" \
+  --commission-max-rate "0.2" \
+  --commission-rate "0.07" \
+  --min-self-delegation "1" \
+  --pubkey  $(quicksilverd tendermint show-validator) \
+  --moniker $NODENAME \
+  --chain-id $QUICKSILVER_CHAIN_ID
+
+
+
+# firewall
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow ssh/tcp
+sudo ufw limit ssh/tcp
+sudo ufw allow ${QUICKSILVER_PORT}656,${QUICKSILVER_PORT}660/tcp
+sudo ufw enable
+sudo ufw reload
+
+
+quicksilverd tx staking create-validator \
+  --amount 1000000uqck \
+  --from $QUICKSILVER_WALLET_ADDRESS \
+  --commission-max-change-rate "0.01" \
+  --commission-max-rate "0.2" \
+  --commission-rate "0.07" \
+  --min-self-delegation "1" \
+  --pubkey  \
+  --moniker $NODENAME \
+  --chain-id $QUICKSILVER_CHAIN_ID
