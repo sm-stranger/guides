@@ -138,7 +138,7 @@ sudo ufw default deny incoming
 sudo ufw allow ssh/tcp
 sudo ufw limit ssh/tcp
 sudo ufw allow ${QUICKSILVER_PORT}656,${QUICKSILVER_PORT}660/tcp
-sudo ufw enable
+sudo ufw enable -y
 sudo ufw reload
 
 # create or restore wallet
@@ -151,7 +151,7 @@ do
       quicksilverd keys add $WALLET
       break
     ;;
-    "Restore"
+    "Restore")
       quicksilverd keys add $WALLET --recover
     ;;
   esac
