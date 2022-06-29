@@ -128,6 +128,7 @@ echo '=============== SETUP FINISHED ==================='
 echo -e 'To check logs: \e[1m\e[32mjournalctl -u quicksilverd -f -o cat\e[0m'
 echo -e "To check sync status: \e[1m\e[32mcurl -s localhost:${QUICKSILVER_PORT}657/status | jq .result.sync_info\e[0m"
 
+
 # load variables into system
 source $HOME/.bash_profile
 
@@ -139,3 +140,24 @@ sudo ufw limit ssh/tcp
 sudo ufw allow ${QUICKSILVER_PORT}656,${QUICKSILVER_PORT}660/tcp
 sudo ufw enable
 sudo ufw reload
+
+# create or restore wallet
+PS3='Do you want to create or restore wallet? (input your choise number and press Enter): '
+options=( "Create" "Restore" )
+select opt in "${options[@]}"
+do
+  case $opt in
+    "Create")
+      quicksilverd keys add $WALLET
+      break
+    ;;
+    "Restore"
+      quicksilverd keys add $WALLET --recover
+    ;;
+done
+
+QUICKSILVER_WALLET_ADDRESS=$(quicksilverd keys show $WALLET -a)
+QUICKSILVER_VALOPER_ADDRESS=$(quicksilverd keys show $WALLET --bech val -a)
+echo 'export QUICKSILVER_WALLET_ADDRESS='${QUICKSILVER_WALLET_ADDRESS} >> $HOME/.bash_profile
+echo 'export QUICKSILVER_VALOPER_ADDRESS='${QUICKSILVER_VALOPER_ADDRESS} >> $HOME/.bash_profile
+source $HOME/.bash_profile
