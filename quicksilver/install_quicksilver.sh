@@ -154,6 +154,7 @@ do
     "Restore"
       quicksilverd keys add $WALLET --recover
     ;;
+  esac
 done
 
 QUICKSILVER_WALLET_ADDRESS=$(quicksilverd keys show $WALLET -a)
