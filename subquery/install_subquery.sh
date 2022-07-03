@@ -56,3 +56,4 @@ systemctl status subquery.service
 sleep 2
 
 docker ps
+
