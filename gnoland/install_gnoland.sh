@@ -46,7 +46,7 @@ source $HOME/.bash_profile
 
 # получение токенов
 balance="$(./build/gnokey query "bank/balances/"$address --remote gno.land:36657)"
-while [ $balance !== 'height: 0 data: "3000gnot"' ];
+while true;
     do  curl 'https://gno.land:5050/' --data-raw 'toaddr='$address;
         balance="$(./build/gnokey query "bank/balances/"$address --remote gno.land:36657)";
         echo $balance;
