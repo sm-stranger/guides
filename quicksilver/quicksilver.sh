@@ -1,15 +1,8 @@
 #!/bin/bash
-echo "=================================================="
-echo -e "\033[0;35m"
-echo " :::    ::: ::::::::::: ::::    :::  ::::::::  :::::::::  :::::::::: ::::::::  ";
-echo " :+:   :+:      :+:     :+:+:   :+: :+:    :+: :+:    :+: :+:       :+:    :+: ";
-echo " +:+  +:+       +:+     :+:+:+  +:+ +:+    +:+ +:+    +:+ +:+       +:+        ";
-echo " +#++:++        +#+     +#+ +:+ +#+ +#+    +:+ +#+    +:+ +#++:++#  +#++:++#++ ";
-echo " +#+  +#+       +#+     +#+  +#+#+# +#+    +#+ +#+    +#+ +#+              +#+ ";
-echo " #+#   #+#  #+# #+#     #+#   #+#+# #+#    #+# #+#    #+# #+#       #+#    #+# ";
-echo " ###    ###  #####      ###    ####  ########  #########  ########## ########  ";
-echo -e "\e[0m"
-echo "=================================================="
+echo "DM_Paul"
+echo "Install Quicksilver"
+echo "to get interactive mode input '$quicksilver' "
+$quicksilver=./quicksilver.sh
 
 sleep 2
 
@@ -162,3 +155,19 @@ QUICKSILVER_VALOPER_ADDRESS=$(quicksilverd keys show $WALLET --bech val -a)
 echo 'export QUICKSILVER_WALLET_ADDRESS='${QUICKSILVER_WALLET_ADDRESS} >> $HOME/.bash_profile
 echo 'export QUICKSILVER_VALOPER_ADDRESS='${QUICKSILVER_VALOPER_ADDRESS} >> $HOME/.bash_profile
 source $HOME/.bash_profile
+
+
+
+###################################### Useful Commands ######################################
+
+# check sync
+# quicksilverd status 2>&1 | jq .SyncInfo
+
+# get wallet list
+# quicksilverd keys list
+
+# calculate synchronization time
+# wget -O synctime.py https://raw.githubusercontent.com/kj89/testnet_manuals/main/quicksilver/tools/synctime.py && python3 ./synctime.py
+
+# get validators list
+# quicksilverd q staking validators -oj --limit=3000 | jq '.validators[] | select(.status=="BOND_STATUS_BONDED")' | jq -r '(.tokens|tonumber/pow(10; 6)|floor|tostring) + " \t " + .description.moniker' | sort -gr | nl
