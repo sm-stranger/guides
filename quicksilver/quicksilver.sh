@@ -1,8 +1,8 @@
 #!/bin/bash
 echo "DM_Paul"
 echo "Install Quicksilver"
-echo "to get interactive mode input '$quicksilver' "
-$quicksilver=./quicksilver.sh
+echo "to get interactive mode input '$menu' "
+$menu=./quicksilver.sh
 
 sleep 2
 
