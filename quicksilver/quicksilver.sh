@@ -1,6 +1,6 @@
 #!/bin/bash
-echo "DM_Paul"
-echo "Install Quicksilver"
+echo " ================================= DM_Paul ============================================= "
+echo " ================================= Install Quicksilver ================================= "
 
 sleep 2
 
