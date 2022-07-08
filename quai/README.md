@@ -24,6 +24,8 @@
     <li>25+ MBit/sec download Internet service</li>
 </ul>
 
+<h2>To install Quai use this script</h2>
+
 <pre>
     <code>wget -O quai.sh https://raw.githubusercontent.com/dm-paull/guides/main/quai/quai.sh && chmod +x quai.sh && ./quai.sh</code>
 </pre>
