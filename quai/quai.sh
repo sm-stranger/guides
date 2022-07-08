@@ -1,5 +1,7 @@
 #!/bin/bash
 
+################################ Preparation ################################
+
 # update & upgrade system
 sudo apt update && sudo apt upgrade -y
 
@@ -12,7 +14,7 @@ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.7.linux-amd64.tar.gz
 export PATH=$PATH:/usr/local/go/bin
 
 
-### Install Quai ###
+################################ Install Quai ################################
 
 # clone go-quai onto your machine
 git clone https://github.com/spruce-solutions/go-quai
