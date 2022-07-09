@@ -18,7 +18,7 @@ fi
 
 
 
-function installPreparation{
+
     # update & upgrade system
     sudo apt update && sudo apt upgrade -y
 
@@ -29,7 +29,7 @@ function installPreparation{
     wget -c https://golang.org/dl/go1.17.7.linux-amd64.tar.gz
     rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.7.linux-amd64.tar.gz
     export PATH=$PATH:/usr/local/go/bin
-}
+
 
 function installQuaiNode{
     cd
