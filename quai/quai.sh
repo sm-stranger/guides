@@ -7,12 +7,11 @@ if [ !$quai ]; then
     source $HOME/.bash_profile
 fi
 
-function setVariables{
-    
+
         read -p "Enter Miner Name: " STATS_NAME
         echo 'export STATS_NAME='$STATS_NAME >> $HOME/.bash_profile
+
     
-    echo 'export STATS_PASS=quainetworkbronze' >> $HOME/.bash_profile
     source $HOME/.bash_profile
 }
 
