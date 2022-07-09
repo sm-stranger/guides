@@ -85,28 +85,33 @@ do
         ;;
 
         "Update")
-            update
-            break
+            git pull origin main
+            make quai-manager
+        break
         ;;
+
         "Run")
             make run-mine-background region=1 zone=2
-            break
+        break
         ;;
+
         "Stop")
             make stop
             break
         ;;
+
         "Check logs")
             cat logs/manager.log
             break
         ;;
+
         "Check Miner Logs")
             cat logs/manager.log
+        break
         ;;
+
     esac
 done
-
-
 
 
 # view logs of running nodes
@@ -116,7 +121,7 @@ done
 # make stop
 
 # start full node without mining
-    #make run-full-node
+#make run-full-node
 
-    # start full mining node
-    #make run-full-mining
+# start full mining node
+#make run-full-mining
