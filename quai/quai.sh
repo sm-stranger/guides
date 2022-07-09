@@ -8,11 +8,14 @@ if [ !$quai ]; then
 fi
 
 
+    
     read -p "Enter Miner Name: " STATS_NAME
     echo 'export STATS_NAME='$STATS_NAME >> $HOME/.bash_profile
 
     
     source $HOME/.bash_profile
+
+
 
 
 function installPreparation{
@@ -106,6 +109,8 @@ do
         ;;
         "Check Miner Logs")
             cat logs/manager.log
+    esac
+done
 
 
 
