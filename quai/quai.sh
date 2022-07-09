@@ -7,7 +7,7 @@ if [ !$quai ]; then
     source $HOME/.bash_profile
 fi
 
-function setVariables{
+function setVariables {
     if [ !$STATS_NAME ]; then
         read -p 'Enter STATS_NAME: ' STATS_NAME
         echo 'export STATS_NAME='$STATS_NAME >> $HOME/.bash_profile
