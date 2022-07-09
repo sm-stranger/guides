@@ -37,6 +37,8 @@ function installQuaiNode{
     # move into go-quai directory
     cd go-quai
 
+    setVariables
+
     # copies environment variables to your machine
     cp network.env.dist network.env
 
