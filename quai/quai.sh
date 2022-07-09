@@ -13,7 +13,7 @@ fi
 
     
     source $HOME/.bash_profile
-}
+
 
 function installPreparation{
     # update & upgrade system
