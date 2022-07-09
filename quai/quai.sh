@@ -109,6 +109,7 @@ do
         ;;
         "Check Miner Logs")
             cat logs/manager.log
+        ;;
     esac
 done
 
