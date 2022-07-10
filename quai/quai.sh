@@ -1,11 +1,13 @@
 #!/bin/bash
 
 # Quai menu variable
-if [ !$quai ]; then
-    quai='./quai.sh'
-    echo 'export quai='$quai >> $HOME/.bash_profile
-    source $HOME/.bash_profile
+if [ !$menu ]; then
+    menu='./quai.sh'
+    echo 'export menu='$menu >> $HOME/.bash_profile
 fi
+IP=$(wget -qO- eth0.me)
+echo 'export IP='$IP >> $HOME/.bash_profile
+source $HOME/.bash_profile
 
 
 PS3='Please enter your choice (input your option number and press enter): '
@@ -31,15 +33,18 @@ do
             
             
             ######################## Install Quai Node ########################
-            
-            # go to parent directory
-            cd $HOME
 
-            # clone go-quai onto your machine
+            # clone go-quai on to your machine
             git clone https://github.com/spruce-solutions/go-quai
 
             # move into go-quai directory
-            cd go-quai
+            cd $HOME/go-quai
+
+            # generates go-quai binary
+            make go-quai
+
+            # copies environment variables to your machine
+            cp network.env.dist network.env
 
             if [ !STATS_NAME ]; then
                 read -p "Enter Miner Name: " STATS_NAME
@@ -48,11 +53,8 @@ do
             echo 'export STATS_PASS=quainetworkbronze' >> $HOME/.bash_profile  
             source $HOME/.bash_profile
 
-            # copies environment variables to your machine
-            cp network.env.dist network.env
-
-            # generates go-quai binary
-            make go-quai
+            sed -i -e "s/^STATS_NAME *=.*/STATS_NAME = \"$STATS_NAME\"/" $HOME/go-quai/network.env
+            sed -i -e "s/^STATS_PASS *=.*/STATS_PASS = \"$STATS_PASS\"/" $HOME/go-quai/network.env
 
             
             ######################## Install Quai Miner ########################
@@ -64,22 +66,24 @@ do
             git clone https://github.com/spruce-solutions/quai-manager
 
             # move into quai-manager directory
-            cd quai-manager
+            cd $HOME/quai-manager
 
             # generate quai-manager binary
             make quai-manager
 
             # move into go-quai directory
-            cd go-quai
+            cd $HOME/go-quai
 
             # start running our full node that is primed for mining
-            make run-full-mining
+            make run-full-mining NAME=$STATS_NAME PASSWORD=quainetworkbronze STATS_HOST=$IP
 
-            # move into quai-manager directory
-            cd quai-manager
+            # move to quai-manager directory
+            cd $HOME/quai-manager
 
             # start mining
-            make run-mine-background region=1 zone=2
+            make run-mine-background region=2 zone=2
+
+
 
         break
         ;;
@@ -114,14 +118,22 @@ do
 done
 
 
+
+# node logs
+#cat $HOME/go-quai/nodelogs/prime.log
+
+# miner logs
+#cat logs/manager.log
+
 # view logs of running nodes
-# cat nodelogs/zone-1-1.log
+#cat nodelogs/zone-1-1.log
 
 # Stop go-quai
-# make stop
+#make stop
 
 # start full node without mining
 #make run-full-node
 
 # start full mining node
 #make run-full-mining
+
