@@ -11,7 +11,7 @@ source $HOME/.bash_profile
 
 
 PS3='Please enter your choice (input your option number and press enter): '
-options=("Install" "Update" "Run" "Stop" "Check Logs"  )
+options=("Install" "Update" "Run" "Stop" "Check Node Logs" "Check Miner Logs"  )
 
 select opt in "${options[@]}"
 do
@@ -24,7 +24,7 @@ do
             sudo apt update && sudo apt upgrade -y
 
             # install dependencies
-            sudo apt install curl build-essential git wget jq make gcc tmux -y
+            sudo apt install curl build-essential git wget jq make gcc tmux mc -y
 
             # install GO
             wget -c https://golang.org/dl/go1.17.7.linux-amd64.tar.gz
@@ -83,8 +83,6 @@ do
             # start mining
             make run-mine-background region=2 zone=2
 
-
-
         break
         ;;
 
@@ -104,8 +102,8 @@ do
             break
         ;;
 
-        "Check logs")
-            cat logs/manager.log
+        "Check Node logs")
+            cat $HOME/go-quai/nodelogs/prime.log
             break
         ;;
 
