@@ -2,13 +2,6 @@
 
 # Quai menu variable
 
-    menu='./quai.sh'
-    echo 'export menu='$menu >> $HOME/.bash_profile
-
-IP=$(wget -qO- eth0.me)
-echo 'export IP='$IP >> $HOME/.bash_profile
-source $HOME/.bash_profile
-
 
 PS3='Please enter your choice (input your option number and press enter): '
 options=("Install" "Update" "Run" "Stop" "Check Node Logs" "Check Miner Logs"  )
@@ -17,6 +10,13 @@ select opt in "${options[@]}"
 do
     case $opt in
         "Install")
+
+            menu='./quai.sh'
+            echo 'export menu='$menu >> $HOME/.bash_profile
+
+            IP=$(wget -qO- eth0.me)
+            echo 'export IP='$IP >> $HOME/.bash_profile
+            source $HOME/.bash_profile
 
             ######################## Preparation ########################
 
