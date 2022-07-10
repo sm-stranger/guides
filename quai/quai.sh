@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Quai menu variable
-if [ !$menu ]; then
+
     menu='./quai.sh'
     echo 'export menu='$menu >> $HOME/.bash_profile
-fi
+
 IP=$(wget -qO- eth0.me)
 echo 'export IP='$IP >> $HOME/.bash_profile
 source $HOME/.bash_profile
