@@ -1,7 +1,7 @@
 <h1>Установка Agoric</h1>
-<p>
+<h2>
     Для начала придумываем имя ноды и записываем его в переменную  (nodename заменить на свое произвольное значение):
-</p>
+</h2>
 <pre>
     <code>
         AGORIC_NODENAME=nodename
@@ -10,7 +10,7 @@
     </code>
 </pre>
 
-<p>Устанавливаем NodeJS:</p>
+<h2>Устанавливаем NodeJS:</h2>
 <pre>
     <code>
         curl https://deb.nodesource.com/setup_14.x | sudo bash
@@ -21,7 +21,7 @@
     </code>
 </pre>
 
-<p>Устанавливаем Go</p>
+<h2>Устанавливаем Go</h2>
 <pre>
     <code>
         wget -O go1.17.1.linux-amd64.tar.gz https://golang.org/dl/go1.17.linux-amd64.tar.gz
@@ -38,7 +38,7 @@
     </code>
 </pre>
 
-<p>Клонируем репозиторий Agoric и устанавливаем ноду</p>
+<h2>Клонируем репозиторий Agoric и устанавливаем ноду</h2>
 <pre>
     <code>
         export GIT_BRANCH=agoric-3
@@ -54,3 +54,4 @@
         echo $chainName
     </code>
 </pre>
+
