@@ -6,9 +6,10 @@ curl https://main.agoric.net/network-config > $HOME/chain.json
 ```
 
 ## Далее нам нужно установить переменные
-Here you have to put name of your moniker (validator) that will be visible in explorer
+Нужно заменить nodename на свое значение
+
 ```
-NODENAME=<MY_MONIKER_NAME_GOES_HERE>
+NODENAME=nodename
 ```
 
 ## Обновляем систему
