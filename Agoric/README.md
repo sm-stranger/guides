@@ -37,3 +37,20 @@
         go version
     </code>
 </pre>
+
+<p>Клонируем репозиторий Agoric и устанавливаем ноду</p>
+<pre>
+    <code>
+        export GIT_BRANCH=agoric-3
+        git clone https://github.com/Agoric/ag0
+        cd ag0
+        git checkout agoric-3.1
+        make build
+        . $HOME/.bash_profile
+        cp $HOME/ag0/build/ag0 /usr/local/bin
+
+        curl https://main.agoric.net/network-config > chain.json
+        chainName=`jq -r .chainName < chain.json`
+        echo $chainName
+    </code>
+</pre>
