@@ -21,3 +21,5 @@ sudo apt-get update && sudo apt-get install yarn
 sudo npm install -g near-cli
 
 export NEAR_ENV=mainnet
+
+aws s3 --no-sign-request cp s3://near-protocol-public/backups/mainnet/archive/latest .
