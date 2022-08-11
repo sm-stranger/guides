@@ -88,7 +88,7 @@ echo "============================================================"
 mkdir $HOME/go/bin
 git clone https://github.com/Stride-Labs/stride.git strided && \
 cd strided && \
-git checkout 3cb77a79f74e0b797df5611674c3fbd000dfeaa1 && \
+git checkout 4ec1b0ca818561cef04f8e6df84069b14399590e && \
 sh ./scripts-local/build.sh -s $HOME/go/bin
 #go build -mod=readonly -trimpath -o $HOME/go/bin ./...
 strided version
