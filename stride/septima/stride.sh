@@ -23,7 +23,6 @@ options=(
 "Parametrs and balance" 
 "Create validator" 
 "Check validator"
-"Delete Node"
 "Exit")
 select opt in "${options[@]}"
                do
@@ -89,7 +88,7 @@ echo "============================================================"
 mkdir $HOME/go/bin
 git clone https://github.com/Stride-Labs/stride.git strided && \
 cd strided && \
-git checkout 4ec1b0ca818561cef04f8e6df84069b14399590e && \
+git checkout 3cb77a79f74e0b797df5611674c3fbd000dfeaa1 && \
 sh ./scripts-local/build.sh -s $HOME/go/bin
 #go build -mod=readonly -trimpath -o $HOME/go/bin ./...
 strided version
@@ -252,7 +251,7 @@ journalctl -u strided -f -o cat
 break
 ;;
 
-"Delete Node")
+"Delete node")
 systemctl stop strided
 systemctl disable strided
 rm /etc/systemd/system/strided.service
