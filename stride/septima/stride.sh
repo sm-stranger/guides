@@ -23,6 +23,7 @@ options=(
 "Parametrs and balance" 
 "Create validator" 
 "Check validator"
+"Delete Node"
 "Exit")
 select opt in "${options[@]}"
                do
@@ -251,7 +252,7 @@ journalctl -u strided -f -o cat
 break
 ;;
 
-"Delete node")
+"Delete Node")
 systemctl stop strided
 systemctl disable strided
 rm /etc/systemd/system/strided.service
