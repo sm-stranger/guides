@@ -14,7 +14,7 @@ echo "============================================================"
 PS3='Select an action: '
 options=(
 "Prepare the server for installation" 
-"Install STRIDE Node" 
+"Install STRIDE Node"
 "Create wallet"
 "Recover wallet"
 "Log Node" 
