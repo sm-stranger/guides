@@ -87,10 +87,10 @@ source $HOME/.bash_profile
 echo "============================================================"
 echo "Installation started"
 echo "============================================================"
-mkdir $HOME/go/bin
-git clone https://github.com/Stride-Labs/stride.git strided && \
-cd strided && \
-git checkout 4ec1b0ca818561cef04f8e6df84069b14399590e && \
+mkdir -p $HOME/go/bin
+git clone https://github.com/Stride-Labs/stride.git
+cd stride
+git checkout 4ec1b0ca818561cef04f8e6df84069b14399590e
 sh ./scripts-local/build.sh -s $HOME/go/bin
 
 strided version
@@ -120,7 +120,7 @@ sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"$pruning_interval\"/" $
 
 
 
-tee $HOME/strided.service > /dev/null <<EOF
+sudo tee $HOME/strided.service > /dev/null <<EOF
 [Unit]
 Description=stride
 After=network.target
