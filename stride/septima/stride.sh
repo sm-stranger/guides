@@ -3,13 +3,6 @@
 while true
 do
 
-# Logo
-source ~/.bash_profile
-
-echo "============================================================"
-curl -s https://raw.githubusercontent.com/AlekseyMoskalev1/script/main/Noders.sh | bash
-echo "============================================================"
-
 
 PS3='Select an action: '
 options=(
@@ -28,7 +21,11 @@ options=(
 select opt in "${options[@]}"
                do
                    case $opt in
-                   
+
+
+######################################## PREPARE THE SERVER FOR INSTALLATION #################################
+
+
 "Prepare the server for installation")
 echo "============================================================"
 echo "Preparation has begun"
@@ -60,12 +57,15 @@ echo "The server is ready!"
 echo "============================================================"
 break
 ;;
-            
+
+######################################### INSTALL STRIDE NODE ##############################################
+
+
 "Install STRIDE Node")
 echo "============================================================"
 echo "Set parameters"
 echo "============================================================"
-echo "Enter NodName:"
+echo "Enter NodeName:"
 echo "============================================================"
                 
 read STRIDENODE
@@ -79,6 +79,7 @@ echo "============================================================"
 read STRIDEWALLET
 STRIDEWALLET=$STRIDEWALLET
 echo 'export STRIDEWALLET='${STRIDEWALLET} >> $HOME/.bash_profile
+
 STRIDECHAIN=""STRIDE-TESTNET-2""
 echo 'export STRIDECHAIN='${STRIDECHAIN} >> $HOME/.bash_profile
 source $HOME/.bash_profile
@@ -89,9 +90,9 @@ echo "============================================================"
 mkdir $HOME/go/bin
 git clone https://github.com/Stride-Labs/stride.git strided && \
 cd strided && \
-git checkout 3cb77a79f74e0b797df5611674c3fbd000dfeaa1 && \
+git checkout 4ec1b0ca818561cef04f8e6df84069b14399590e && \
 sh ./scripts-local/build.sh -s $HOME/go/bin
-#go build -mod=readonly -trimpath -o $HOME/go/bin ./...
+
 strided version
 
 strided init $STRIDENODE --chain-id $STRIDECHAIN
@@ -147,6 +148,8 @@ echo "============================================================"
 break
 ;;
 
+######################################### RECOVER WALLET ###########################################
+
 "Recover wallet")
 
 strided keys add $STRIDEWALLET --recover
@@ -163,6 +166,8 @@ echo "============================================================"
 
 break
 ;;
+
+######################################### CREATE WALLET ##############################################
 
 "Create wallet")
 echo "============================================================"
@@ -184,6 +189,8 @@ echo "============================================================"
 break
 ;;
 
+######################################### CHECK NODE STATUS ###########################################
+
 "Check node status")
 echo "============================================================"
 echo "Synchronization status must be false to continue!"
@@ -194,6 +201,8 @@ echo "Skipped Blocks and Validator Creation Block $(strided q slashing signing-i
 echo "============================================================"
 break
 ;;
+
+######################################### CREATE VALIDATOR #############################################
 
 "Create validator")
 echo "============================================================"
@@ -216,6 +225,8 @@ strided tx staking create-validator \
 break
 ;;
 
+######################################### PARAMETERS AND BALANCE ########################################
+
 "Parametrs and balance")
 echo "============================================================"
 echo "Your parameters"
@@ -227,6 +238,8 @@ echo "============================================================"
 break
 ;;
 
+######################################### CHECK VALIDATOR ################################################
+
 "Check validator") 
 echo "============================================================"
 echo "Account request: $(strided q auth account $(strided keys show $STRIDEADDRWALL -a) -o text)"
@@ -234,6 +247,8 @@ echo "Validator info: $(strided q staking validator $STRIDEVAL)"
 echo "============================================================"
 break
 ;;
+
+######################################### REQUEST TOKENS IN DISCORD ######################################
 
 "Request for tokens in Discord")
 request=$request
@@ -247,10 +262,14 @@ echo "============================================================"
 break
 ;;
 
+######################################### LOGS ##########################################################
+
 "Log Node")
 journalctl -u strided -f -o cat
 break
 ;;
+
+######################################### DELETE NODE ###################################################
 
 "Delete Node")
 systemctl stop strided
@@ -259,6 +278,8 @@ rm /etc/systemd/system/strided.service
 rm -r .stride strided
 break
 ;;
+
+######################################### EXIT ######################################
 
 "Exit")
 exit
