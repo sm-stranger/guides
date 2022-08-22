@@ -3,29 +3,31 @@
 while true
 do
 
+# Logo
+source ~/.bash_profile
+
+echo "============================================================"
+curl -s https://raw.githubusercontent.com/AlekseyMoskalev1/script/main/Noders.sh | bash
+echo "============================================================"
+
 
 PS3='Select an action: '
 options=(
 "Prepare the server for installation" 
-"Install STRIDE Node"
+"Install STRIDE Node" 
 "Create wallet"
 "Recover wallet"
 "Log Node" 
 "Check node status" 
-"Request for tokens in Discord"
+"Request for tokens in Discord" 
 "Parametrs and balance" 
 "Create validator" 
 "Check validator"
-"Delete Node"
 "Exit")
 select opt in "${options[@]}"
                do
                    case $opt in
-
-
-######################################## PREPARE THE SERVER FOR INSTALLATION #################################
-
-
+                   
 "Prepare the server for installation")
 echo "============================================================"
 echo "Preparation has begun"
@@ -41,31 +43,29 @@ sudo apt install curl tar wget clang pkg-config libssl-dev jq build-essential bs
 
 #INSTALL GO
 echo "============================================================"
-echo "Install GO 1.18.1"
+echo "Install GO 1.18.3"
 echo "============================================================"
 sleep 3
-wget https://golang.org/dl/go1.18.1.linux-amd64.tar.gz; \
+wget https://golang.org/dl/go1.18.3.linux-amd64.tar.gz; \
 rm -rv /usr/local/go; \
-tar -C /usr/local -xzf go1.18.1.linux-amd64.tar.gz && \
-rm -v go1.18.1.linux-amd64.tar.gz && \
+tar -C /usr/local -xzf go1.18.3.linux-amd64.tar.gz && \
+rm -v go1.18.3.linux-amd64.tar.gz && \
 echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> ~/.bash_profile && \
 source ~/.bash_profile && \
-go version > /dev/null
+go version
+
 
 echo "============================================================"
 echo "The server is ready!"
 echo "============================================================"
 break
 ;;
-
-######################################### INSTALL STRIDE NODE ##############################################
-
-
+            
 "Install STRIDE Node")
 echo "============================================================"
 echo "Set parameters"
 echo "============================================================"
-echo "Enter NodeName:"
+echo "Enter NodName:"
 echo "============================================================"
                 
 read STRIDENODE
@@ -79,30 +79,28 @@ echo "============================================================"
 read STRIDEWALLET
 STRIDEWALLET=$STRIDEWALLET
 echo 'export STRIDEWALLET='${STRIDEWALLET} >> $HOME/.bash_profile
-
-STRIDECHAIN=""STRIDE-TESTNET-2""
+STRIDECHAIN=""STRIDE-TESTNET-4""
 echo 'export STRIDECHAIN='${STRIDECHAIN} >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
 echo "============================================================"
 echo "Installation started"
 echo "============================================================"
+git clone https://github.com/Stride-Labs/stride.git && cd stride
+git checkout cf4e7f2d4ffe2002997428dbb1c530614b85df1b
+make build
 mkdir -p $HOME/go/bin
-git clone https://github.com/Stride-Labs/stride.git
-cd stride
-git checkout 4ec1b0ca818561cef04f8e6df84069b14399590e
-sh ./scripts-local/build.sh -s $HOME/go/bin
-
+sudo mv build/strided /root/go/bin/
 strided version
 
 strided init $STRIDENODE --chain-id $STRIDECHAIN
 
 strided tendermint unsafe-reset-all --home $HOME/.stride
 rm $HOME/.stride/config/genesis.json
-wget -O $HOME/.stride/config/genesis.json https://raw.githubusercontent.com/Stride-Labs/testnet/main/poolparty/genesis.json
+wget -O $HOME/.stride/config/genesis.json "https://raw.githubusercontent.com/Stride-Labs/testnet/main/poolparty/genesis.json"
 
 SEEDS=""
-PEERS="c0b278cbfb15674e1949e7e5ae51627cb2a2d0a9@seedv2.poolparty.stridenet.co:26656"; \
+PEERS="54a11c47658ebd5dcbd70eb3c62197b439482d3f@116.202.236.115:21016"; \
 sed -i.bak -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.stride/config/config.toml
 
 # config pruning
@@ -120,7 +118,7 @@ sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"$pruning_interval\"/" $
 
 
 
-sudo tee $HOME/strided.service > /dev/null <<EOF
+tee $HOME/strided.service > /dev/null <<EOF
 [Unit]
 Description=stride
 After=network.target
@@ -148,8 +146,6 @@ echo "============================================================"
 break
 ;;
 
-######################################### RECOVER WALLET ###########################################
-
 "Recover wallet")
 
 strided keys add $STRIDEWALLET --recover
@@ -166,8 +162,6 @@ echo "============================================================"
 
 break
 ;;
-
-######################################### CREATE WALLET ##############################################
 
 "Create wallet")
 echo "============================================================"
@@ -189,8 +183,6 @@ echo "============================================================"
 break
 ;;
 
-######################################### CHECK NODE STATUS ###########################################
-
 "Check node status")
 echo "============================================================"
 echo "Synchronization status must be false to continue!"
@@ -201,8 +193,6 @@ echo "Skipped Blocks and Validator Creation Block $(strided q slashing signing-i
 echo "============================================================"
 break
 ;;
-
-######################################### CREATE VALIDATOR #############################################
 
 "Create validator")
 echo "============================================================"
@@ -225,8 +215,6 @@ strided tx staking create-validator \
 break
 ;;
 
-######################################### PARAMETERS AND BALANCE ########################################
-
 "Parametrs and balance")
 echo "============================================================"
 echo "Your parameters"
@@ -238,8 +226,6 @@ echo "============================================================"
 break
 ;;
 
-######################################### CHECK VALIDATOR ################################################
-
 "Check validator") 
 echo "============================================================"
 echo "Account request: $(strided q auth account $(strided keys show $STRIDEADDRWALL -a) -o text)"
@@ -247,8 +233,6 @@ echo "Validator info: $(strided q staking validator $STRIDEVAL)"
 echo "============================================================"
 break
 ;;
-
-######################################### REQUEST TOKENS IN DISCORD ######################################
 
 "Request for tokens in Discord")
 request=$request
@@ -262,24 +246,18 @@ echo "============================================================"
 break
 ;;
 
-######################################### LOGS ##########################################################
-
 "Log Node")
 journalctl -u strided -f -o cat
 break
 ;;
 
-######################################### DELETE NODE ###################################################
-
-"Delete Node")
+"Delete node")
 systemctl stop strided
 systemctl disable strided
 rm /etc/systemd/system/strided.service
-rm -r .stride strided
+rm -rf .stride strided
 break
 ;;
-
-######################################### EXIT ######################################
 
 "Exit")
 exit

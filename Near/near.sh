@@ -1,25 +1,14 @@
-# Setup NEAR-CLI
-# First, let's make sure the Debian machine is up-to-date.
-sudo apt update && sudo apt upgrade -y
-
-# Install developer tools, Node.js, and npm
-# First, we will start with installing Node.js and npm:
-curl -sL https://deb.nodesource.com/setup_17.x | sudo -E bash -  
-sudo apt install build-essential nodejs
-PATH="$PATH"
-
-# install go, make
-sudo apt-get install gcc g++ make
-
-# install YARN
-curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarnkey.gpg >/dev/null
-echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update && sudo apt-get install yarn
+# change Rust version
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# or
+rustup update stable
 
 
-# Install NEAR-CLI
-sudo npm install -g near-cli
 
-export NEAR_ENV=mainnet
 
-aws s3 --no-sign-request cp s3://near-protocol-public/backups/mainnet/archive/latest .
+
+
+./target/release/neard --home ~/.near init --chain-id mainnet --download-genesis --download-config
+
+
+aws s3 --no-sign-request cp --no-sign-request --recursive s3://near-protocol-public/backups/mainnet/archive/$LATEST /data/near_db
