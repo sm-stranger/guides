@@ -91,7 +91,7 @@ git clone https://github.com/Stride-Labs/stride.git && cd stride
 git checkout 90859d68d39b53333c303809ee0765add2e59dab
 make build
 mkdir -p $HOME/go/bin
-sudo mv build/strided $(which strided)
+sudo mv build/strided /root/go/bin/
 strided version
 
 strided init $STRIDENODE --chain-id $STRIDECHAIN
