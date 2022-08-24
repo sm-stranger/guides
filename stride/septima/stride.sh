@@ -23,7 +23,6 @@ options=(
 "Parametrs and balance" 
 "Create validator" 
 "Check validator"
-"Delete Node"
 "Exit")
 select opt in "${options[@]}"
                do
@@ -53,8 +52,7 @@ tar -C /usr/local -xzf go1.18.3.linux-amd64.tar.gz && \
 rm -v go1.18.3.linux-amd64.tar.gz && \
 echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> ~/.bash_profile && \
 source ~/.bash_profile && \
-go version
-
+go version > /dev/null
 
 echo "============================================================"
 echo "The server is ready!"
@@ -88,7 +86,7 @@ echo "============================================================"
 echo "Installation started"
 echo "============================================================"
 git clone https://github.com/Stride-Labs/stride.git && cd stride
-git checkout 90859d68d39b53333c303809ee0765add2e59dab
+git checkout cf4e7f2d4ffe2002997428dbb1c530614b85df1b
 make build
 mkdir -p $HOME/go/bin
 sudo mv build/strided /root/go/bin/
@@ -252,7 +250,7 @@ journalctl -u strided -f -o cat
 break
 ;;
 
-"Delete Node")
+"Delete node")
 systemctl stop strided
 systemctl disable strided
 rm /etc/systemd/system/strided.service
