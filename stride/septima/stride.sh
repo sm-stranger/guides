@@ -118,7 +118,7 @@ sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"$pruning_interval\"/" $
 
 
 
-tee $HOME/strided.service > /dev/null <<EOF
+tee /etc/systemd/system/strided.service > /dev/null <<EOF
 [Unit]
 Description=stride
 After=network.target
@@ -133,7 +133,7 @@ LimitNOFILE=65535
 WantedBy=multi-user.target
 EOF
 
-sudo mv $HOME/strided.service /etc/systemd/system/
+# sudo mv $HOME/strided.service /etc/systemd/system/
 
 # start service
 sudo systemctl daemon-reload
