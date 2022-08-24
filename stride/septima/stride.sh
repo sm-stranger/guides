@@ -47,12 +47,12 @@ echo "============================================================"
 echo "Install GO 1.19"
 echo "============================================================"
 sleep 3
-wget https://golang.org/dl/go1.19.linux-amd64.tar.gz; \
-rm -rf /usr/local/go; \
-tar -C /usr/local -xzf go1.19.linux-amd64.tar.gz && \
-rm -rf go1.19.linux-amd64.tar.gz && \
-echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> ~/.bash_profile && \
-source ~/.bash_profile && \
+wget https://golang.org/dl/go1.19.linux-amd64.tar.gz;
+rm -rf /usr/local/go;
+tar -C /usr/local -xzf go1.19.linux-amd64.tar.gz &&
+rm -rf go1.19.linux-amd64.tar.gz &&
+echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> ~/.bash_profile &&
+source ~/.bash_profile &&
 go version
 
 echo "============================================================"
