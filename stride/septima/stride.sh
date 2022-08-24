@@ -88,10 +88,10 @@ echo "============================================================"
 echo "Installation started"
 echo "============================================================"
 git clone https://github.com/Stride-Labs/stride.git && cd stride
-git checkout cf4e7f2d4ffe2002997428dbb1c530614b85df1b
+git checkout 90859d68d39b53333c303809ee0765add2e59dab
 make build
 mkdir -p $HOME/go/bin
-sudo mv build/strided /root/go/bin/
+sudo mv build/strided $(which strided)
 strided version
 
 strided init $STRIDENODE --chain-id $STRIDECHAIN
