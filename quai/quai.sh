@@ -102,13 +102,34 @@ do
             make stop
             cd $HOME/quai-manager
             make stop
-            break
+        break
         ;;
 
         "Check Node logs")
             ###### CHANGE: allow users to check nodelogs in any region/zone that they would like ######
-            cat $HOME/go-quai/nodelogs/prime.log
-            break
+            PS3 "Choose which logs you want to see: "
+            options=( "Prime", "Region/Zone Logs" )
+            select opt in "${options[@]}"
+            do
+                case $opt in 
+                    "Prime")
+                        cat $HOME/go-quai/nodelogs/prime.log
+                        break
+                    ;;
+
+                    "Region")
+                        read -p "Enter region ( 1 or 2 or 3 ) for output logs:" region
+                        cat $HOME/go-quai/nodelogs/region-$region.log
+
+                    "Zone"
+                        read -p "Enter region ( 1 or 2 or 3 ) for output logs:" region
+                        read -p "Enter zone ( 1 or 2 or 3 ) for output logs:" zone
+                        cat $HOME/go-quai/nodelogs/zone-$region-$zone.log
+                        
+                esac
+            done
+
+        break
         ;;
 
         "Check Miner Logs")
