@@ -40,21 +40,17 @@ do
             # move into go-quai directory
             cd $HOME/go-quai
 
-            # generates go-quai binary
-            make go-quai
-
             # copies environment variables to your machine
             cp network.env.dist network.env
 
-            if [ !STATS_NAME ]; then
-                read -p "Enter Miner Name: " STATS_NAME
-                echo 'export STATS_NAME='$STATS_NAME >> $HOME/.bash_profile  
-            fi
-            echo 'export STATS_PASS=quainetworkbronze' >> $HOME/.bash_profile  
-            source $HOME/.bash_profile
+            # generates go-quai binary
+            make go-quai
 
-            sed -i -e "s/^STATS_NAME *=.*/STATS_NAME = \"$STATS_NAME\"/" $HOME/go-quai/network.env
-            sed -i -e "s/^STATS_PASS *=.*/STATS_PASS = \"$STATS_PASS\"/" $HOME/go-quai/network.env
+            read -p "Enter PRIME_COINBASE Address: " PRIME_COIMBASE
+            sed -i -e "s/^PRIME_COINBASE *=.*/PRIME_COINBASE = \"$address\"/" $HOME/go-quai/network.env
+
+
+
 
             
             ######################## Install Quai Miner ########################
@@ -74,35 +70,43 @@ do
             # move into go-quai directory
             cd $HOME/go-quai
 
-            # start running our full node that is primed for mining
-            make run-full-mining NAME=$STATS_NAME PASSWORD=quainetworkbronze STATS_HOST=$IP
+            # start running our full node that is primed for mining 
+            make run-full-mining
 
             # move to quai-manager directory
             cd $HOME/quai-manager
 
-            # start mining
-            make run-mine-background region=2 zone=2
+            # start mining 
+            read -p "Choose region for mining: " region
+            read -p "Choose zone for mining: " zone
+            make run-mine-background region=$region zone=$zone
 
         break
         ;;
 
         "Update")
             git pull origin main
+            make go-quai
             make quai-manager
         break
         ;;
 
         "Run")
-            make run-mine-background region=1 zone=2
+            make run-mine-background region=$region zone=$zone
         break
         ;;
 
         "Stop")
+            ###### CHANGE: stop both node and miner, miner first node second ######
+            cd $HOME/go-quai
+            make stop
+            cd $HOME/quai-manager
             make stop
             break
         ;;
 
         "Check Node logs")
+            ###### CHANGE: allow users to check nodelogs in any region/zone that they would like ######
             cat $HOME/go-quai/nodelogs/prime.log
             break
         ;;
@@ -135,3 +139,6 @@ done
 # start full mining node
 #make run-full-mining
 
+## ADDITIONAL INFO ##
+# Locations to mine - regions can be 1 through 3, zones can be 1 through 3 as well!
+# Locations to check logs: prime, region-1, region-2, region-3, zone-1-1, zone-1-2, zone-1-3, zone-2-1, zone-2-2, zone-2-3, zone-3-1, zone-3-2, zone-3-3
